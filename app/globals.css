@@ -6,14 +6,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --red: #d43d27;
 }
 
 body {
@@ -24,4 +17,65 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+@layer components {
+  .before-block {
+    @apply relative before:h-12 before:w-full before:absolute before:left-0 before:-top-12 before:[clip-path:url(#box_shape_top)] before:bg-customred;
+  }
+  .after-block {
+    @apply relative after:h-12 after:w-full after:absolute after:left-0 after:-bottom-12 after:[clip-path:url(#box_shape_bottom)] after:bg-customred;
+  }
+
+  table {
+    @apply min-w-full;
+  }
+
+  th {
+    @apply min-w-full text-center border-b border-r last:border-r-0 border-customred;
+  }
+
+  td {
+    @apply min-w-full text-center p-2 border-r last:border-r-0 border-customred;
+  }
+
+  ul {
+    @apply list-disc ml-6 sm:ml-12;
+  }
+
+  li {
+    @apply py-1;
+  }
+
+  .title {
+    text-shadow: 0 0 0 transparent, -1px -1px 0 var(--red),
+      0px -1px 0 var(--red), 1px -1px 0 var(--red), -1px 0px 0 var(--red),
+      0px 0px 0 var(--red), 1px 0px 0 var(--red), -1px 1px 0 var(--red),
+      0px 1px 0 var(--red), 1px 1px 0 var(--red), -2px -2px 0 var(--red),
+      -1px -2px 0 var(--red), 0px -2px 0 var(--red), 1px -2px 0 var(--red),
+      2px -2px 0 var(--red), -2px -1px 0 var(--red), -1px -1px 0 var(--red),
+      0px -1px 0 var(--red), 1px -1px 0 var(--red), 2px -1px 0 var(--red),
+      -2px 0px 0 var(--red), -1px 0px 0 var(--red), 0px 0px 0 var(--red),
+      1px 0px 0 var(--red), 2px 0px 0 var(--red), -2px 1px 0 var(--red),
+      -1px 1px 0 var(--red), 0px 1px 0 var(--red), 1px 1px 0 var(--red),
+      2px 1px 0 var(--red), -2px 2px 0 var(--red), -1px 2px 0 var(--red),
+      0px 2px 0 var(--red), 1px 2px 0 var(--red), 2px 2px 0 var(--red),
+      -3px -3px 0 var(--red), -2px -3px 0 var(--red), -1px -3px 0 var(--red),
+      0px -3px 0 var(--red), 1px -3px 0 var(--red), 2px -3px 0 var(--red),
+      3px -3px 0 var(--red), -3px -2px 0 var(--red), -2px -2px 0 var(--red),
+      -1px -2px 0 var(--red), 0px -2px 0 var(--red), 1px -2px 0 var(--red),
+      2px -2px 0 var(--red), 3px -2px 0 var(--red), -3px -1px 0 var(--red),
+      -2px -1px 0 var(--red), -1px -1px 0 var(--red), 0px -1px 0 var(--red),
+      1px -1px 0 var(--red), 2px -1px 0 var(--red), 3px -1px 0 var(--red),
+      -3px 0px 0 var(--red), -2px 0px 0 var(--red), -1px 0px 0 var(--red),
+      0px 0px 0 var(--red), 1px 0px 0 var(--red), 2px 0px 0 var(--red),
+      3px 0px 0 var(--red), -3px 1px 0 var(--red), -2px 1px 0 var(--red),
+      -1px 1px 0 var(--red), 0px 1px 0 var(--red), 1px 1px 0 var(--red),
+      2px 1px 0 var(--red), 3px 1px 0 var(--red), -3px 2px 0 var(--red),
+      -2px 2px 0 var(--red), -1px 2px 0 var(--red), 0px 2px 0 var(--red),
+      1px 2px 0 var(--red), 2px 2px 0 var(--red), 3px 2px 0 var(--red),
+      -3px 3px 0 var(--red), -2px 3px 0 var(--red), -1px 3px 0 var(--red),
+      0px 3px 0 var(--red), 1px 3px 0 var(--red), 2px 3px 0 var(--red),
+      3px 3px 0 var(--red);
+  }
 }

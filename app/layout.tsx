@@ -16,7 +16,7 @@ const bubblegum = Bubblegum_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Restaurant Kim Thanh',
+  title: 'Restaurant Kim Thanh - Montbard',
   description:
     'Restaurant asiatique à Montbard avec les spécialités Vietnamiennes, Chinoises et Thaïlandaises et Japonaises. Nous proposons un buffet à volonté avec wok et grillade',
 }

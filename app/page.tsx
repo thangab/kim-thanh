@@ -1,12 +1,12 @@
 import { getMenu } from '@/lib/api'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import Image from 'next/image'
-import buffetDessert from '/public/buffet-dessert.jpg'
-import buffetFrit from '/public/buffet-frit.jpg'
-import buffetFroid from '/public/buffet-froid.jpg'
-import buffetPlat from '/public/buffet-plat.jpg'
-import buffetWok from '/public/buffet-wok.jpg'
-import illusHero from '/public/illus-hero.png'
+import buffetDessert from '/public/buffet-dessert.webp'
+import buffetFrit from '/public/buffet-frit.webp'
+import buffetFroid from '/public/buffet-froid.webp'
+import buffetPlat from '/public/buffet-plat.webp'
+import buffetWok from '/public/buffet-wok.webp'
+import illusHero from '/public/illus-hero.webp'
 
 export default async function Home() {
   const menu = await getMenu()
@@ -54,6 +54,7 @@ export default async function Home() {
               src={illusHero}
               alt="Illustration du restaurant Kim Thanh"
               placeholder="blur" // Optional blur-up while loading
+              priority={true}
             />
           </div>
         </div>

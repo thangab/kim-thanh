@@ -7,12 +7,14 @@ const barlow = Barlow({
   weight: ['400', '600'],
   subsets: ['latin', 'latin-ext'],
   variable: '--font-barlow',
+  display: 'swap',
 })
 
 const bubblegum = Bubblegum_Sans({
   weight: ['400'],
   subsets: ['latin', 'latin-ext'],
   variable: '--font-bubblegum',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {

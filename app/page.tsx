@@ -6,7 +6,7 @@ import buffetFrit from '/public/buffet-frit.webp'
 import buffetFroid from '/public/buffet-froid.webp'
 import buffetPlat from '/public/buffet-plat.webp'
 import buffetWok from '/public/buffet-wok.webp'
-import illusHero from '/public/illus-hero.webp'
+import restoIllus from '/public/resto-illu.webp'
 
 export default async function Home() {
   const menu = await getMenu()
@@ -51,7 +51,7 @@ export default async function Home() {
           <div className="image pt-8 sm:pt-0">
             <Image
               className="[clip-path:url(#box_round_shape)]"
-              src={illusHero}
+              src={restoIllus}
               alt="Illustration du restaurant Kim Thanh"
               placeholder="blur" // Optional blur-up while loading
               priority={true}

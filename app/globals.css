@@ -7,6 +7,8 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
   --red: #d43d27;
+  --font-barlow: "Trebuchet MS", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --font-bubblegum: "Marker Felt", "Bradley Hand", "Comic Sans MS", cursive;
 }
 
 body {
@@ -17,6 +19,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  font-family: var(--font-barlow);
 }
 
 @layer components {

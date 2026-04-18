@@ -44,9 +44,12 @@ export default async function Home() {
             <p className="pb-6">
               Ouvert tous les jours de 12h à 14h et de 19h à 23h sauf le lundi.
             </p>
-            <button className="bg-customred text-white uppercase p-3 h-16 leading-10 [clip-path:url(#btn_shape)]">
-              <a href="#menu">Voir le menu</a>
-            </button>
+            <a
+              className="inline-block bg-customred text-white uppercase p-3 h-16 leading-10 [clip-path:url(#btn_shape)]"
+              href="#menu"
+            >
+              Voir le menu
+            </a>
           </div>
           <div className="image pt-8 sm:pt-0">
             <Image

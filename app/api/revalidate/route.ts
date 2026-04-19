@@ -3,6 +3,6 @@ import { NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
   const tag = request.nextUrl.searchParams.get('tag')
-  if (tag) revalidateTag(tag)
+  if (tag) revalidateTag(tag, 'max')
   return Response.json({ revalidated: true, now: Date.now() })
 }

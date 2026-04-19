@@ -1,12 +1,12 @@
 import { getMenu } from '@/lib/api'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import Image from 'next/image'
-import buffetDessert from '/public/buffet-dessert.webp'
-import buffetFrit from '/public/buffet-frit.webp'
-import buffetFroid from '/public/buffet-froid.webp'
-import buffetPlat from '/public/buffet-plat.webp'
-import buffetWok from '/public/buffet-wok.webp'
-import restoIllus from '/public/resto-illu.webp'
+import buffetDessert from '../public/buffet-dessert.webp'
+import buffetFrit from '../public/buffet-frit.webp'
+import buffetFroid from '../public/buffet-froid.webp'
+import buffetPlat from '../public/buffet-plat.webp'
+import buffetWok from '../public/buffet-wok.webp'
+import restoIllus from '../public/resto-illu.webp'
 
 export default async function Home() {
   const menu = await getMenu()

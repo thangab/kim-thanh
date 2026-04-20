@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @config "../tailwind.config.js";
 
 :root {
@@ -6,8 +6,9 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
   --red: #d43d27;
-  --font-barlow: "Trebuchet MS", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  --font-bubblegum: "Marker Felt", "Bradley Hand", "Comic Sans MS", cursive;
+  --font-barlow:
+    'Trebuchet MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-bubblegum: 'Marker Felt', 'Bradley Hand', 'Comic Sans MS', cursive;
 }
 
 body {
@@ -29,7 +30,7 @@ body {
 
   .before-block::before,
   .after-block::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     width: 100%;
@@ -103,7 +104,7 @@ body {
   }
 
   .menu-group-block:not(:last-child)::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0.5rem;
     right: -0.5rem;
@@ -119,7 +120,7 @@ body {
   }
 
   .menu-group-title::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 50%;
     bottom: 0;
@@ -152,13 +153,14 @@ body {
 
   .menu-line-item::before,
   .menu-extra-item::before {
-    content: "•";
+    content: '';
     position: absolute;
-    left: 0;
-    top: 0.5em;
-    color: #d27c6d;
-    font-size: 1rem;
-    line-height: 1;
+    left: 0.1rem;
+    top: calc(0.72lh - 0.15rem);
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 9999px;
+    background: #d27c6d;
   }
 
   .menu-price-chip {
@@ -189,34 +191,90 @@ body {
   }
 
   .title {
-    text-shadow: 0 0 0 transparent, -1px -1px 0 var(--red),
-      0px -1px 0 var(--red), 1px -1px 0 var(--red), -1px 0px 0 var(--red),
-      0px 0px 0 var(--red), 1px 0px 0 var(--red), -1px 1px 0 var(--red),
-      0px 1px 0 var(--red), 1px 1px 0 var(--red), -2px -2px 0 var(--red),
-      -1px -2px 0 var(--red), 0px -2px 0 var(--red), 1px -2px 0 var(--red),
-      2px -2px 0 var(--red), -2px -1px 0 var(--red), -1px -1px 0 var(--red),
-      0px -1px 0 var(--red), 1px -1px 0 var(--red), 2px -1px 0 var(--red),
-      -2px 0px 0 var(--red), -1px 0px 0 var(--red), 0px 0px 0 var(--red),
-      1px 0px 0 var(--red), 2px 0px 0 var(--red), -2px 1px 0 var(--red),
-      -1px 1px 0 var(--red), 0px 1px 0 var(--red), 1px 1px 0 var(--red),
-      2px 1px 0 var(--red), -2px 2px 0 var(--red), -1px 2px 0 var(--red),
-      0px 2px 0 var(--red), 1px 2px 0 var(--red), 2px 2px 0 var(--red),
-      -3px -3px 0 var(--red), -2px -3px 0 var(--red), -1px -3px 0 var(--red),
-      0px -3px 0 var(--red), 1px -3px 0 var(--red), 2px -3px 0 var(--red),
-      3px -3px 0 var(--red), -3px -2px 0 var(--red), -2px -2px 0 var(--red),
-      -1px -2px 0 var(--red), 0px -2px 0 var(--red), 1px -2px 0 var(--red),
-      2px -2px 0 var(--red), 3px -2px 0 var(--red), -3px -1px 0 var(--red),
-      -2px -1px 0 var(--red), -1px -1px 0 var(--red), 0px -1px 0 var(--red),
-      1px -1px 0 var(--red), 2px -1px 0 var(--red), 3px -1px 0 var(--red),
-      -3px 0px 0 var(--red), -2px 0px 0 var(--red), -1px 0px 0 var(--red),
-      0px 0px 0 var(--red), 1px 0px 0 var(--red), 2px 0px 0 var(--red),
-      3px 0px 0 var(--red), -3px 1px 0 var(--red), -2px 1px 0 var(--red),
-      -1px 1px 0 var(--red), 0px 1px 0 var(--red), 1px 1px 0 var(--red),
-      2px 1px 0 var(--red), 3px 1px 0 var(--red), -3px 2px 0 var(--red),
-      -2px 2px 0 var(--red), -1px 2px 0 var(--red), 0px 2px 0 var(--red),
-      1px 2px 0 var(--red), 2px 2px 0 var(--red), 3px 2px 0 var(--red),
-      -3px 3px 0 var(--red), -2px 3px 0 var(--red), -1px 3px 0 var(--red),
-      0px 3px 0 var(--red), 1px 3px 0 var(--red), 2px 3px 0 var(--red),
+    text-shadow:
+      0 0 0 transparent,
+      -1px -1px 0 var(--red),
+      0px -1px 0 var(--red),
+      1px -1px 0 var(--red),
+      -1px 0px 0 var(--red),
+      0px 0px 0 var(--red),
+      1px 0px 0 var(--red),
+      -1px 1px 0 var(--red),
+      0px 1px 0 var(--red),
+      1px 1px 0 var(--red),
+      -2px -2px 0 var(--red),
+      -1px -2px 0 var(--red),
+      0px -2px 0 var(--red),
+      1px -2px 0 var(--red),
+      2px -2px 0 var(--red),
+      -2px -1px 0 var(--red),
+      -1px -1px 0 var(--red),
+      0px -1px 0 var(--red),
+      1px -1px 0 var(--red),
+      2px -1px 0 var(--red),
+      -2px 0px 0 var(--red),
+      -1px 0px 0 var(--red),
+      0px 0px 0 var(--red),
+      1px 0px 0 var(--red),
+      2px 0px 0 var(--red),
+      -2px 1px 0 var(--red),
+      -1px 1px 0 var(--red),
+      0px 1px 0 var(--red),
+      1px 1px 0 var(--red),
+      2px 1px 0 var(--red),
+      -2px 2px 0 var(--red),
+      -1px 2px 0 var(--red),
+      0px 2px 0 var(--red),
+      1px 2px 0 var(--red),
+      2px 2px 0 var(--red),
+      -3px -3px 0 var(--red),
+      -2px -3px 0 var(--red),
+      -1px -3px 0 var(--red),
+      0px -3px 0 var(--red),
+      1px -3px 0 var(--red),
+      2px -3px 0 var(--red),
+      3px -3px 0 var(--red),
+      -3px -2px 0 var(--red),
+      -2px -2px 0 var(--red),
+      -1px -2px 0 var(--red),
+      0px -2px 0 var(--red),
+      1px -2px 0 var(--red),
+      2px -2px 0 var(--red),
+      3px -2px 0 var(--red),
+      -3px -1px 0 var(--red),
+      -2px -1px 0 var(--red),
+      -1px -1px 0 var(--red),
+      0px -1px 0 var(--red),
+      1px -1px 0 var(--red),
+      2px -1px 0 var(--red),
+      3px -1px 0 var(--red),
+      -3px 0px 0 var(--red),
+      -2px 0px 0 var(--red),
+      -1px 0px 0 var(--red),
+      0px 0px 0 var(--red),
+      1px 0px 0 var(--red),
+      2px 0px 0 var(--red),
+      3px 0px 0 var(--red),
+      -3px 1px 0 var(--red),
+      -2px 1px 0 var(--red),
+      -1px 1px 0 var(--red),
+      0px 1px 0 var(--red),
+      1px 1px 0 var(--red),
+      2px 1px 0 var(--red),
+      3px 1px 0 var(--red),
+      -3px 2px 0 var(--red),
+      -2px 2px 0 var(--red),
+      -1px 2px 0 var(--red),
+      0px 2px 0 var(--red),
+      1px 2px 0 var(--red),
+      2px 2px 0 var(--red),
+      3px 2px 0 var(--red),
+      -3px 3px 0 var(--red),
+      -2px 3px 0 var(--red),
+      -1px 3px 0 var(--red),
+      0px 3px 0 var(--red),
+      1px 3px 0 var(--red),
+      2px 3px 0 var(--red),
       3px 3px 0 var(--red);
   }
 }

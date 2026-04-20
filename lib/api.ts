@@ -1,39 +1,66 @@
-import type { Document } from '@contentful/rich-text-types'
-
-const POST_GRAPHQL_FIELDS = `
-  name
-  price
-  order
-  description {
-    json
-  }
-`
-
-type MenuEntry = {
-  name: string
-  price: string
+type MenuItem = {
+  label: string
+  overridePrice?: string | null
+  note?: string | null
   order: number
-  description: {
-    json: Document
-  }
 }
 
-type MenuQueryResponse = {
+type MenuGroup = {
+  title: string
+  order: number
+  items: MenuItem[]
+}
+
+type StructuredMenuSection = {
+  title: string
+  pricePrefix?: string | null
+  basePrice?: string | null
+  intro?: string | null
+  layout: 'columns' | 'list' | 'notice'
+  order: number
+  priceNote?: string | null
+  groups: MenuGroup[]
+  items: MenuItem[]
+}
+
+type StructuredMenuQueryResponse = {
   data?: {
-    menuCollection?: {
-      items?: MenuEntry[]
+    menuSectionCollection?: {
+      items?: Array<{
+        title: string
+        pricePrefix?: string | null
+        basePrice?: string | null
+        intro?: string | null
+        layout: 'columns' | 'list' | 'notice'
+        order: number
+        priceNote?: string | null
+        groupsCollection?: {
+          items?: Array<{
+            title: string
+            order: number
+            itemsCollection?: {
+              items?: MenuItem[]
+            }
+          }>
+        }
+        itemsCollection?: {
+          items?: MenuItem[]
+        }
+      }>
     }
   }
   errors?: Array<{ message: string }>
 }
 
-async function fetchGraphQL(query: string): Promise<MenuQueryResponse> {
+export type HomeMenuSection = StructuredMenuSection
+
+async function fetchGraphQL<T>(query: string): Promise<T> {
   const spaceId = process.env.CONTENTFUL_SPACE_ID
   const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN
 
   if (!spaceId || !accessToken) {
     console.warn('Contentful environment variables are missing. Returning empty menu.')
-    return {}
+    return {} as T
   }
 
   const response = await fetch(
@@ -50,36 +77,91 @@ async function fetchGraphQL(query: string): Promise<MenuQueryResponse> {
   )
 
   if (!response.ok) {
-    throw new Error(`Contentful request failed with status ${response.status}`)
+    const errorText = await response.text()
+    throw new Error(
+      `Contentful request failed with status ${response.status}: ${errorText}`
+    )
   }
 
   return response.json()
 }
 
-function extractMenuEntries(fetchResponse: MenuQueryResponse): MenuEntry[] {
+function extractStructuredMenuSections(
+  fetchResponse: StructuredMenuQueryResponse
+): StructuredMenuSection[] {
   if (fetchResponse.errors?.length) {
     console.error(
-      'Contentful GraphQL returned errors:',
+      'Contentful structured menu query returned errors:',
       fetchResponse.errors.map((error) => error.message).join(', ')
     )
   }
 
-  return fetchResponse.data?.menuCollection?.items ?? []
+  return (fetchResponse.data?.menuSectionCollection?.items ?? []).map((section) => ({
+    title: section.title,
+    pricePrefix: section.pricePrefix,
+    basePrice: section.basePrice,
+    intro: section.intro,
+    layout: section.layout,
+    order: section.order,
+    priceNote: section.priceNote,
+    groups: (section.groupsCollection?.items ?? []).map((group) => ({
+      title: group.title,
+      order: group.order,
+      items: [...(group.itemsCollection?.items ?? [])].sort((a, b) => a.order - b.order),
+    })),
+    items: [...(section.itemsCollection?.items ?? [])].sort((a, b) => a.order - b.order),
+  }))
 }
 
-export async function getMenu(): Promise<MenuEntry[]> {
+export async function getMenu(): Promise<HomeMenuSection[]> {
   try {
-    const entries = await fetchGraphQL(
+    const structuredResponse = await fetchGraphQL<StructuredMenuQueryResponse>(
       `query {
-        menuCollection(order: order_ASC)  {
+        menuSectionCollection(order: order_ASC, limit: 20) {
           items {
-            ${POST_GRAPHQL_FIELDS}
+            title
+            pricePrefix
+            basePrice
+            intro
+            layout
+            order
+            priceNote
+            groupsCollection(limit: 10) {
+              items {
+                ... on MenuGroup {
+                  title
+                  order
+                  itemsCollection(limit: 30) {
+                    items {
+                      ... on MenuItem {
+                        label
+                        overridePrice
+                        note
+                        order
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            itemsCollection(limit: 30) {
+              items {
+                ... on MenuItem {
+                  label
+                  overridePrice
+                  note
+                  order
+                }
+              }
+            }
           }
         }
       }`
     )
 
-    return extractMenuEntries(entries) ?? []
+    return extractStructuredMenuSections(structuredResponse).sort(
+      (a, b) => a.order - b.order
+    )
   } catch (error) {
     console.error('Unable to fetch menu from Contentful:', error)
     return []

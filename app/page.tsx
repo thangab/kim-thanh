@@ -1,5 +1,4 @@
-import { getMenu } from '@/lib/api'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { getMenu, type HomeMenuSection } from '@/lib/api'
 import Image from 'next/image'
 import buffetDessert from '../public/buffet-dessert.webp'
 import buffetFrit from '../public/buffet-frit.webp'
@@ -7,6 +6,96 @@ import buffetFroid from '../public/buffet-froid.webp'
 import buffetPlat from '../public/buffet-plat.webp'
 import buffetWok from '../public/buffet-wok.webp'
 import restoIllus from '../public/resto-illu.webp'
+
+function StructuredMenuSection({
+  section,
+}: {
+  section: HomeMenuSection
+}) {
+  const hasColumns = section.layout === 'columns' && section.groups.length > 0
+  const priceBadge = [section.pricePrefix, section.basePrice].filter(Boolean).join(' ')
+  const groupGridColumns =
+    section.groups.length >= 3 ? 'lg:grid-cols-3' : section.groups.length === 2 ? 'lg:grid-cols-2' : ''
+  const noteText =
+    section.priceNote === 'Certaines options ont un tarif différent.'
+      ? 'Les prix indiqués en rouge remplacent le tarif de base.'
+      : section.priceNote
+
+  return (
+    <section className="my-8 overflow-hidden">
+      <div className="menu-section-header flex flex-col gap-3 px-6 py-4 text-center sm:flex-row sm:items-center sm:justify-center sm:px-10">
+        <h3 className="text-2xl font-bold uppercase tracking-wide text-white sm:text-4xl">
+          {section.title}
+        </h3>
+        {priceBadge ? (
+          <div className="inline-flex items-center justify-center self-center px-2 py-1 text-white sm:ml-4">
+            <span className="text-xs font-semibold uppercase tracking-[0.24em] opacity-90">
+              {section.pricePrefix}
+            </span>
+            <span className="ml-3 font-bubblegum text-3xl leading-none sm:text-5xl">
+              {section.basePrice}
+            </span>
+          </div>
+        ) : null}
+      </div>
+
+      <div className="px-2 py-6 sm:px-4 sm:py-8">
+        {section.intro ? (
+          <p className="menu-intro mx-auto mb-6 max-w-6xl text-lg font-semibold text-customblue sm:text-2xl">
+            {section.intro}
+          </p>
+        ) : null}
+
+        {hasColumns ? (
+          <div className={`menu-group-grid mx-auto mb-8 max-w-6xl grid gap-4 ${groupGridColumns}`}>
+            {section.groups
+              .sort((a, b) => a.order - b.order)
+              .map((group) => (
+                <div
+                  key={`${section.title}-${group.title}`}
+                  className="menu-group-block px-4 py-1"
+                >
+                  <h4 className="menu-group-title text-center text-xl font-bold text-customblue sm:text-3xl">
+                    {group.title}
+                  </h4>
+                  <ul className="menu-item-list mt-4 text-lg sm:text-2xl">
+                    {group.items.map((item) => (
+                      <li key={`${group.title}-${item.order}`} className="menu-line-item">
+                        <span>{item.label}</span>
+                        {item.overridePrice ? (
+                          <span className="menu-price-chip">{item.overridePrice}</span>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+          </div>
+        ) : null}
+
+        {section.items.length ? (
+          <ul className="menu-extra-list mx-auto max-w-6xl text-lg sm:text-2xl">
+            {section.items.map((item) => (
+              <li key={`${section.title}-item-${item.order}`} className="menu-extra-item py-3">
+                <span>{item.label}</span>
+                {item.overridePrice ? (
+                  <span className="menu-price-chip">{item.overridePrice}</span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        {noteText ? (
+          <p className="mx-auto mt-6 max-w-6xl border-t border-[rgba(212,61,39,0.18)] pt-4 text-sm text-customblue/75 sm:text-base">
+            <span className="mr-2 font-semibold text-customred">*</span>
+            {noteText}
+          </p>
+        ) : null}
+      </div>
+    </section>
+  )
+}
 
 export default async function Home() {
   const menu = await getMenu()
@@ -48,7 +137,7 @@ export default async function Home() {
               className="inline-block bg-customred text-white uppercase p-3 h-16 leading-10 [clip-path:url(#btn_shape)]"
               href="#menu"
             >
-              Voir le menu
+              Voir le menu a emporter
             </a>
           </div>
           <div className="image pt-8 sm:pt-0">
@@ -114,15 +203,11 @@ export default async function Home() {
           >
             Menu pour les plats à emporter
           </h2>
-          {menu?.map(({ name, price, description }, index) => (
-            <div key={index}>
-              <h3 className="bg-customred text-white text-center text-2xl sm:text-4xl p-3 my-6 [clip-path:url(#btn_shape)]">
-                {name} <span className="font-bubblegum text-5xl ">{price}</span>
-              </h3>
-              <div className="text-base sm:text-2xl">
-                {documentToReactComponents(description.json)}
-              </div>
-            </div>
+          {menu?.map((section, index) => (
+            <StructuredMenuSection
+              key={`${section.title}-${index}`}
+              section={section}
+            />
           ))}
         </div>
       </div>

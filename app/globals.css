@@ -89,6 +89,105 @@ body {
     padding-bottom: 0.25rem;
   }
 
+  .menu-section-header {
+    clip-path: url(#btn_shape);
+    background: #d43d27;
+  }
+
+  .menu-group-grid {
+    position: relative;
+  }
+
+  .menu-group-block {
+    position: relative;
+  }
+
+  .menu-group-block:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    right: -0.5rem;
+    width: 1px;
+    height: calc(100% - 1rem);
+    background: rgba(212, 61, 39, 0.22);
+  }
+
+  .menu-group-title {
+    position: relative;
+    padding-bottom: 0.65rem;
+    margin-bottom: 1rem;
+  }
+
+  .menu-group-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 100%;
+    max-width: 18rem;
+    height: 1px;
+    background: rgba(212, 61, 39, 0.55);
+    transform: translateX(-50%);
+  }
+
+  .menu-item-list,
+  .menu-extra-list {
+    list-style: none;
+    margin-left: 0;
+  }
+
+  .menu-line-item,
+  .menu-extra-item {
+    position: relative;
+    color: #6fa3b0;
+    font-weight: 600;
+    line-height: 1.45;
+    padding-left: 1.2rem;
+    text-wrap: balance;
+  }
+
+  .menu-line-item {
+    text-align: left;
+  }
+
+  .menu-line-item::before,
+  .menu-extra-item::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    color: #d27c6d;
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .menu-price-chip {
+    display: inline-block;
+    padding-left: 0.75rem;
+    color: #cc593f;
+    font-family: var(--font-bubblegum);
+    font-size: 1.05rem;
+    line-height: 1;
+    white-space: nowrap;
+    vertical-align: baseline;
+  }
+
+  .menu-extra-item {
+    text-align: left;
+  }
+
+  @media (max-width: 1023px) {
+    .menu-group-block:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .menu-price-chip {
+      font-size: 1.15rem;
+    }
+  }
+
   .title {
     text-shadow: 0 0 0 transparent, -1px -1px 0 var(--red),
       0px -1px 0 var(--red), 1px -1px 0 var(--red), -1px 0px 0 var(--red),
